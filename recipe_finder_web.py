@@ -54,7 +54,9 @@ def main():
     if ingredients_input:
         ingredients = [i.strip() for i in ingredients_input.split(",")]
         finder = RecipeFinder()
-        results = finder.search_recipes(ingredients)
+        
+        with st.spinner('Searching for recipes...'):
+            results = finder.search_recipes(ingredients)
 
         if results:
             st.success("Found recipes that match your ingredients!")
@@ -82,7 +84,8 @@ def main():
 
                     # Get and show full recipe details
                     if st.button("Show Instructions", key=recipe['id']):
-                        details = finder.get_recipe_details(recipe['id'])
+                        with st.spinner('Loading recipe details...'):
+                            details = finder.get_recipe_details(recipe['id'])
                         if details:
                             st.write(f"⏱️ Ready in: {details['readyInMinutes']} minutes")
                             st.write(f"🍽️ Servings: {details['servings']}")
