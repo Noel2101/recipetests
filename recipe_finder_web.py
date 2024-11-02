@@ -7,7 +7,11 @@ load_dotenv()
 
 class RecipeFinder:
     def __init__(self):
-        self.api_key = st.secrets["SPOONACULAR_API_KEY"]
+        try:
+            self.api_key = st.secrets["SPOONACULAR_API_KEY"]
+        except Exception as e:
+            st.error("Please set up SPOONACULAR_API_KEY in your Streamlit secrets")
+            st.stop()
         self.base_url = "https://api.spoonacular.com/recipes"
 
     def search_recipes(self, ingredients):
